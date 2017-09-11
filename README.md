@@ -1,6 +1,7 @@
 #################################################################################################
 To Run the Network on Test Data:
 #####################################################################################################
+
 -Step 1: Running the Network to Detect the ON and OFF surfaces 
 + First, put all the images to be processed (STD Tiff stacks of chAT Bands) into the ImagesHere folder.
 
@@ -11,6 +12,7 @@ To Run the Network on Test Data:
 + Manually verify that the overlays are correct by looking at the Tiff files mentioned above. If yes, import the 2 chAT surfaces, stored as filename_ON.mat and filename_OFF.mat into Sumbul RGC code to continue with the Warping step. These two .mat files contain the 2 surfaces that would have been returned by Sumbul's firSurfaceToSACAnnotation function.
 
 ######################################################################################################
+
 -Step 2: Clean Up
 + Make sure to delete or remove the images in ImageHere so that you can use the network again with other images.
 
