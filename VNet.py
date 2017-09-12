@@ -104,11 +104,11 @@ class VNet(object):
  #           matplotlib.pyplot.show()
 	#solver.net.save('/home/Desktop/VNet/Models/vnet.caffemodel')
 
-    def train(self):
-        print self.params['ModelParams']['dirTrain']
+    def trainON(self):
+        print self.params['ModelParams']['dirTrainON']
 
         #we define here a data manage object
-        self.dataManagerTrain = DM.DataManager(self.params['ModelParams']['dirTrain'],
+        self.dataManagerTrain = DM.DataManager(self.params['ModelParams']['dirTrainON'],
                                                self.params['ModelParams']['dirResult'],
                                                self.params['DataManagerParams'])
 	print "load train data"
@@ -133,7 +133,7 @@ class VNet(object):
             f.write("gamma: 0.1 \n")
             f.write("display: 1 \n")
             f.write("snapshot: 500 \n")
-            f.write("snapshot_prefix: \"" + self.params['ModelParams']['dirSnapshots'] + "\" \n")
+            f.write("snapshot_prefix: \"" + self.params['ModelParams']['dirSnapshotsON'] + "\" \n")
             #f.write("test_iter: 3 \n")
             #f.write("test_interval: " + str(test_interval) + "\n")
 
@@ -141,9 +141,9 @@ class VNet(object):
         solver = caffe.SGDSolver("solver.prototxt")
         os.remove("solver.prototxt")
 
-        if (self.params['ModelParams']['snapshot'] > 0):
-            solver.restore(self.params['ModelParams']['dirSnapshots'] + "_iter_" + str(
-                self.params['ModelParams']['snapshot']) + ".solverstate")
+        if (self.params['ModelParams']['snapshotON'] > 0):
+            solver.restore(self.params['ModelParams']['dirSnapshotsON'] + "_iter_" + str(
+                self.params['ModelParams']['snapshotON']) + ".solverstate")
 
   #      plt.ion()
 
@@ -171,6 +171,72 @@ class VNet(object):
 
         self.trainThread(dataQueue, solver)
 
+    def trainOFF(self):
+        print self.params['ModelParams']['dirTrainOFF']
+
+        #we define here a data manage object
+        self.dataManagerTrain = DM.DataManager(self.params['ModelParams']['dirTrainOFF'],
+                                               self.params['ModelParams']['dirResult2'],
+                                               self.params['DataManagerParams'])
+	print "load train data"
+        self.dataManagerTrain.loadTrainingData() #loads in sitk format
+
+        howManyImages = len(self.dataManagerTrain.sitkImages)
+        howManyGT = len(self.dataManagerTrain.sitkGT)
+
+        assert howManyGT == howManyImages
+
+        print "The dataset has shape: data - " + str(howManyImages) + ". labels - " + str(howManyGT)
+	time.sleep(1)
+        test_interval = 50000
+        # Write a temporary solver text file because pycaffe is stupid
+        with open("solver.prototxt", 'w') as f:
+            f.write("net: \"" + self.params['ModelParams']['prototxtTrain'] + "\" \n")
+            f.write("base_lr: " + str(self.params['ModelParams']['baseLR']) + " \n")
+            f.write("momentum: 0.99 \n")
+            f.write("weight_decay: 0.0005 \n")
+            f.write("lr_policy: \"step\" \n")
+            f.write("stepsize: 30000 \n")
+            f.write("gamma: 0.1 \n")
+            f.write("display: 1 \n")
+            f.write("snapshot: 500 \n")
+            f.write("snapshot_prefix: \"" + self.params['ModelParams']['dirSnapshotsOFF'] + "\" \n")
+            #f.write("test_iter: 3 \n")
+            #f.write("test_interval: " + str(test_interval) + "\n")
+
+        f.close()
+        solver = caffe.SGDSolver("solver.prototxt")
+        os.remove("solver.prototxt")
+
+        if (self.params['ModelParams']['snapshotOFF'] > 0):
+            solver.restore(self.params['ModelParams']['dirSnapshotsOFF'] + "_iter_" + str(
+                self.params['ModelParams']['snapshotOFF']) + ".solverstate")
+
+  #      plt.ion()
+
+        numpyImages = self.dataManagerTrain.getNumpyImages()
+        numpyGT = self.dataManagerTrain.getNumpyGT()
+
+        #numpyImages['Case00.mhd']
+        #numpy images is a dictionary that you index in this way (with filenames)
+
+        for key in numpyImages:
+            mean = np.mean(numpyImages[key][numpyImages[key]>0])
+            std = np.std(numpyImages[key][numpyImages[key]>0])
+
+            numpyImages[key]-=mean
+            numpyImages[key]/=std
+
+        dataQueue = Queue(30) #max 50 images in queue
+        dataPreparation = [None] * self.params['ModelParams']['nProc']
+	print "creating thread"
+        #thread creation
+        for proc in range(0,self.params['ModelParams']['nProc']):
+            dataPreparation[proc] = Process(target=self.prepareDataThread, args=(dataQueue, numpyImages, numpyGT))
+            dataPreparation[proc].daemon = True
+            dataPreparation[proc].start()
+
+        self.trainThread(dataQueue, solver)
 
     def test(self):
         self.dataManagerTest = DM.DataManager(self.params['ModelParams']['dirTest'], self.params['ModelParams']['dirResult'], self.params['DataManagerParams'])

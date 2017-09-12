@@ -35,13 +35,9 @@ params['DataManagerParams']['VolSize'] = np.asarray([128,128,64],dtype=int)
 params['DataManagerParams']['normDir'] = False #if rotates the volume according to its transformation in the mhd file. Not reccommended.
 
 model=VN.VNet(params)
-trainON = [i for i, j in enumerate(sys.argv) if j == '-trainON']
-if len(trainON)>0:
-    model.trainON()
-
-trainOFF = [i for i, j in enumerate(sys.argv) if j == '-trainOFF']
-if len(trainOFF)>0:
-    model.trainOFF()
+train = [i for i, j in enumerate(sys.argv) if j == '-train']
+if len(train)>0:
+    model.train()
 
 test = [i for i, j in enumerate(sys.argv) if j == '-test']  #####ON
 if len(test) > 0:
