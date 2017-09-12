@@ -1,5 +1,4 @@
-#################################################################################################
-To Run the Network on Test Data:
+#To Run the Network on Test Data:
 #####################################################################################################
 
 -Step 1: Running the Network to Detect the ON and OFF surfaces 
@@ -23,7 +22,8 @@ To Run the Network on Test Data:
 ########################################################################################################
 Notes: In the case where the overlays are not correct, manually annotated the data, and store the Annotated files (xls or txt format) in the VNet/Dataset/Annotations folder so that the network can train itself with the new data.
 ########################################################################################################
-To Train the Network with new Data:
+
+#To Train the Network with new Data:
 
 -Step 1: Install Dependencies and Libraries 
 + Run CaffeInstallation.sh and PythonLibraryInstallation.sh. To run the 2 files, either double-click on the file name and choose 'Run On Terminal', or manually open up a new Terminal, change directory (cd command) to locate the file, and type:
