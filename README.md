@@ -30,7 +30,7 @@ Notes: In the case where the overlays are not correct, manually annotated the da
 in order to execute the command that download and install dependencies necessary to run pycaffe.
 
 ## -Step 2: Prepare training data
-+ The ON and OFF band should be trained on separated network for best result, and all the images has to be resized to 128x128x64 before feeding into the network.
++ The ON and OFF band should be trained on separated network for best result, and all the images has to be resized to 128x128x64 before feeding into the network. The steps on how to do so is below.
 
 + First, put all the raw images that needed to be train in the Dataset/RawImages folder.
 
