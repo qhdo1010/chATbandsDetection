@@ -1,6 +1,6 @@
 import numpy as np
 import SimpleITK as sitk
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 def hist_match(source, template):
     """
@@ -45,19 +45,19 @@ def hist_match(source, template):
 
     return interp_t_values[bin_idx].reshape(oldshape)
 
-def sitk_show(nda, title=None, margin=0.0, dpi=40):
-    figsize = (1 + margin) * nda.shape[0] / dpi, (1 + margin) * nda.shape[1] / dpi
+#def sitk_show(nda, title=None, margin=0.0, dpi=40):
+#    figsize = (1 + margin) * nda.shape[0] / dpi, (1 + margin) * nda.shape[1] / dpi
 
-    extent = (0, nda.shape[1], nda.shape[0], 0)
-    fig = plt.figure(figsize=figsize, dpi=dpi)
-    ax = fig.add_axes([margin, margin, 1 - 2*margin, 1 - 2*margin])
+#    extent = (0, nda.shape[1], nda.shape[0], 0)
+#    fig = plt.figure(figsize=figsize, dpi=dpi)
+#    ax = fig.add_axes([margin, margin, 1 - 2*margin, 1 - 2*margin])
 
-    plt.set_cmap("gray")
-    for k in range(0,nda.shape[2]):
-        print "printing slice "+str(k)
-        ax.imshow(np.squeeze(nda[:,:,k]),extent=extent,interpolation=None)
-        plt.draw()
-        plt.pause(0.1)
+ #   plt.set_cmap("gray")
+#    for k in range(0,nda.shape[2]):
+#        print "printing slice "+str(k)
+#        ax.imshow(np.squeeze(nda[:,:,k]),extent=extent,interpolation=None)
+#        plt.draw()
+#        plt.pause(0.1)
         #plt.waitforbuttonpress()
 
 def computeQualityMeasures(lP,lT):

@@ -1,7 +1,7 @@
 import caffe
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
+#import matplotlib.pyplot as plt
+#import matplotlib
 import os
 import DataManager as DM
 import utilities
@@ -97,11 +97,11 @@ class VNet(object):
 		  # this does the training
             train_loss[it] = solver.net.blobs['loss'].data
 		
-            if (np.mod(it, 10) == 0):
-                plt.clf()
-                plt.plot(range(0, it), train_loss[0:it])
-                plt.pause(0.00000001)
-            matplotlib.pyplot.show()
+ #           if (np.mod(it, 10) == 0):
+ #               plt.clf()
+ #               plt.plot(range(0, it), train_loss[0:it])
+ #               plt.pause(0.00000001)
+ #           matplotlib.pyplot.show()
 	#solver.net.save('/home/Desktop/VNet/Models/vnet.caffemodel')
 
     def train(self):
@@ -145,7 +145,7 @@ class VNet(object):
             solver.restore(self.params['ModelParams']['dirSnapshots'] + "_iter_" + str(
                 self.params['ModelParams']['snapshot']) + ".solverstate")
 
-        plt.ion()
+  #      plt.ion()
 
         numpyImages = self.dataManagerTrain.getNumpyImages()
         numpyGT = self.dataManagerTrain.getNumpyGT()

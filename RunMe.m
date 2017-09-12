@@ -1,7 +1,28 @@
 %%%%%%%%%%%%%%MATLAB SCript to Automatically Detect chAT Surfaces%%%%%%%%%
 clear all
 close all
+path1 = getenv('PATH');
+path1 = [path1 ':/usr/local/cuda-8.0/bin:/usr/local/cuda-8.0/bin:/opt/conda/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin'];
+setenv('PATH',path1);
 
+path2 = getenv('PYTHONPATH');
+path2 = [path2 ':/opt/3D-Caffe/distribute/python'];
+setenv('PYTHONPATH',path2);
+
+path3 = getenv('PYTHONPATH');
+path3 = [path3 ':/opt/3D-Caffe/python'];
+setenv('PYTHONPATH',path3);
+
+path4 = '/opt/3D-Caffe';
+setenv('CAFFE_ROOT',path3);
+
+path5 = getenv('LD_LIBRARY_PATH');
+path5 = [path5 ':/usr/local/cuda-8.0/lib64:/opt/3D-Caffe/distribute/lib'];
+setenv('LD_LIBRARY_PATH',path5);
+
+
+%clear all
+%close all
 %STEP 1%%%%%%%%%%Downsample Image to 128x128x64%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%remember to put image in VNet/ImagesHere folder%%%%%%%%%%%%%%%
 files = dir('/media/areca_raid/VNet/ImagesHere/*chAT_STD.tif');
@@ -40,9 +61,9 @@ cd('/media/areca_raid/VNet/')
 
 
 %STEP 2%%%%%%%%%%%%Call python to run CNN%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-system('python /media/areca_raid/VNet/main.py -test'); %%detect ON
+system('python main.py -test'); %%detect ON
 pause(1);
-system('python /media/areca_raid/VNet/main.py -test2');  %%detect OFF
+system('python main.py -test2');  %%detect OFF
 pause(1);
 
 %STEP 3%%%%%%%%%%Resample to Original Size%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
