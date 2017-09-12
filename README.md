@@ -22,26 +22,30 @@ To Run the Network on Test Data:
 
 ########################################################################################################
 Notes: In the case where the overlays are not correct, manually annotated the data, and store the Annotated files (xls or txt format) in the VNet/Dataset/Annotations folder so that the network can train itself with the new data.
-
+########################################################################################################
 To Train the Network with new Data:
+
 -Step 1: Install Dependencies and Libraries 
 + Run CaffeInstallation.sh and PythonLibraryInstallation.sh. To run the 2 files, either double-click on the file name and choose 'Run On Terminal', or manually open up a new Terminal, change directory (cd command) to locate the file, and type:
             ./filename.sh 
 in order to execute the command that download and install dependencies necessary to run pycaffe.
 
 -Step 2: Prepare training data
-+ The ON and OFF band should be trained on separated network for best results. 
-+ Thus, create a 
-+ All the images has to be resized to 128x128x64. 
-+ Put the resized images and its corresponding mask/groundtruth in the Dataset folder, either under ON or OFF depending on the type of groundtruths 
++ The ON and OFF band should be trained on separated network for best result, and all the images has to be resized to 128x128x64 before feeding into the network.
+
++ First, put all the raw images that needed to be train in the Dataset/RawImages folder.
+
++ Then, put the corresponding ON and OFF .txt annotation files into the Dataset/Annotations Folder. Note that the annotation files should be in .txt format.
+
++ Find the CreateTrainingData.m script and run it on Matlab to create the Groundtruths, resize the images and the groundtruths, and put them in the right location ready to be trained.
 
 -Step 3: Run the training script
-+ Open a Terminal, locate the VNet Directory, and type: python main.py -train to run and train the network 
- 
++ Open a Terminal, locate the VNet Directory, and type: python main.py -trainON to run and train the network with the ON chATband data. This should take 2-3 days depending on the number of iterations specified in main.py (default is 100,000).
 
- 
- 
++ After the network has completed training the ON data, open a new Terminal, locate the VNet Directory, and type: python main.py -trainOFF to run and train the network with the OFF chATband data. This should also take 2-3 days depending on the number of iterations specified in main.py (default is 100,000).
 
++ The resulting Trained Models should be in Models/SnapshotsOFF for OFF data and Models/SnapshotsON for ON data.
+ 
 ######################################################################################################################
 # VNet
 Reference: https://sagarhukkire.github.io/Vnet-Cafffe_Guide/
