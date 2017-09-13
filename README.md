@@ -19,10 +19,14 @@
 + Delete all the Tiff files from ResultsON and ResultsOFF folder as well, since those are just there to verify the raw network prediction.
 
 ########################################################################################################
-Notes: In the case where the overlays are not correct, manually annotated the data, and store the Annotated files (xls or txt format) in the VNet/Dataset/Annotations folder so that the network can train itself with the new data.
+### Notes: 
++ In the case where the overlays are not correct, manually annotated the data, and store the Annotated files (xls or txt format) in the VNet/Dataset/Annotations folder so that the network can train itself with the new data.
 
-Notes: Make sure the SnapshotON and SnapshotOFF parameters in VNet/main.py have not been modified by anyone else before running Runme.m
++ Make sure the SnapshotON and SnapshotOFF parameters in VNet/main.py have not been modified by anyone else before running Runme.m
 Those parameters should be modified if the network is to be trained again, as will be discussed below, but basically, don't make any change to anything in main.py if you don't know what you are doing! Just put images in Imagehere and run RunMe.m
+
+### Common Errors:
++ If when running the network, the error Out of Memory occurred, open a terminal, run nvidia-smi to check the status of the GPU and what process is taking up the GPU memory. Simply kill that process using the Linux terminal with the kill or killall command.  
 ########################################################################################################
 
 # To Train the Network with new Data:
