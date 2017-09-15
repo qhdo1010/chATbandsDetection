@@ -7,7 +7,7 @@
 
 + After the Matlab script has finished running, the 2 chAT surfaces will be stored in SurfacesDectected Folder, plus a Tiff file for each raw image containing the ON and OFF surfaces detected by the Network overlayed on top of the Original Tiff file. To improve correctness, for each raw images, there will be 2 results: filename_validation_ON_OFF.tif and filename_validation_ON_OFF_2.tif, returned by 2 different post-processing algorithms. Hence, for each raw image, there will be 2 Tiff files and 4 Surfaces Detected: filename_ON.mat, filename_ON_2.mat, filename_OFF.mat and filename_OFF_2.mat. 
 
-+ It's up to the user to decide which combination works best, and which resulting surfaces should be used. Hence, manually verify that the overlays are correct by looking at the Tiff files mentioned above, and pick the best results. Once finished choosing, import the 2 chAT surfaces that looks best, stored as filename_ON.mat and filename_OFF.mat into Sumbul RGC code to continue with the Warping step. These two .mat files contain the 2 surfaces that would have been returned by Sumbul's firSurfaceToSACAnnotation function.
++ It's up to the user to decide which combination works best, and which resulting surfaces should be used. Hence, using ImageJ, manually verify that the overlays are correct by looking at the Tiff files mentioned above, and pick the best results. Once finished choosing, import the 2 chAT surfaces that looks best, stored as filename_ON.mat and filename_OFF.mat into Sumbul RGC code to continue with the Warping step. These two .mat files contain the 2 surfaces that would have been returned by Sumbul's firSurfaceToSACAnnotation function.
 
 ######################################################################################################
 
