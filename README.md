@@ -1,3 +1,6 @@
+To understand the purpose of this work, check out our paper here:
+https://www.biorxiv.org/content/early/2018/02/28/272914
+
 # To Run the Network on Test Data: 
 
 ## -Step 1: Running the Network to Detect the ON and OFF surfaces 
